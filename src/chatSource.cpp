@@ -74,7 +74,10 @@ static void chatSourceTick(void * data, float seconds)
 static obs_properties_t * chatSourceProperties(void * data)
 {
     UNUSED_PARAMETER(data);
+
     obs_properties_t * properties = obs_properties_create();
+
+    obs_properties_add_text(properties, "username", obs_module_text("Username"), OBS_TEXT_DEFAULT);
 
     return properties;
 }
