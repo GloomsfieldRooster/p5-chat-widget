@@ -33,15 +33,15 @@
     },
     "platformConfig": {
         "macos": {
-            "bundleId": "com.example.obs-plugintemplate"
+            "bundleId": "co.gloomsfield.obs-p5-chat-widget"
         }
     },
-    "name": "obs-plugintemplate",
-    "displayName": "OBS Plugin Template",
+    "name": "obs-p5-chat-widget",
+    "displayName": "P5 Chat Widget",
     "version": "1.0.0",
-    "author": "Your Name Here",
-    "website": "https://example.com",
-    "email": "me@example.com",
+    "author": "Amory Acosta",
+    "website": "https://github.com/GloomsfieldRooster/p5-chat-widget",
+    "email": "rooster@gloomsfield.co",
     "uuids": {
         "windowsApp": "00000000-0000-0000-0000-000000000000"
     }
