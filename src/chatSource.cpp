@@ -11,6 +11,9 @@ static void * chatSourceCreate(obs_data_t * settings, obs_source_t * source)
 {
     UNUSED_PARAMETER(settings);
     UNUSED_PARAMETER(source);
+
+    chatSource * newChatSoure = new chatSource;
+    return newChatSoure;
 }
 
 static void chatSourceDestroy(void * data)
@@ -71,6 +74,9 @@ static void chatSourceTick(void * data, float seconds)
 static obs_properties_t * chatSourceProperties(void * data)
 {
     UNUSED_PARAMETER(data);
+    obs_properties_t * properties = obs_properties_create();
+
+    return properties;
 }
 
 struct obs_source_info chatSourceInfo
