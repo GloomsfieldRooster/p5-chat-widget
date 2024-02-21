@@ -41,6 +41,12 @@ static void chatSourceActivate(void * data)
     UNUSED_PARAMETER(data);
 }
 
+static void chatSourceRender(void * data, gs_effect_t * effect)
+{
+    UNUSED_PARAMETER(data);
+    UNUSED_PARAMETER(effect);
+}
+
 struct obs_source_info chatSourceInfo
 {
     .id = "p5_chat_source",
@@ -53,12 +59,12 @@ struct obs_source_info chatSourceInfo
     .get_height = chatSourceGetHeight,       // static uint32_t (void * data)
     .update = chatSourceUpdate,              // static void (void * data, obs_data_t * settings)
     .activate = chatSourceActivate,          // static void (void * data)
+    .video_render = chatSourceRender,        // static void (void * data, gs_effect_t * effect)
     /* To be implemented                        Signatures
     -------------------------------------------------------------------------------
     .get_defaults = chatSourceDefaults,      // static void (obs_data_t * settings)
     .show = chatSourceShow,                  // static void (void * data)
     .hide = chatSourceHide,                  // static void (void * data)
-    .video_render = chatSourceRender,        // static void (void * data, gs_effect_t * effect)
     .video_tick = chatSourceTick,            // static void (void * data, float seconds)
     .get_properties = chatSourceProperties,  // static obs_properties_t * (void * data)
     */
