@@ -30,6 +30,12 @@ static uint32_t chatSourceGetHeight(void * data)
     return source->height;
 }
 
+static void chatSourceUpdate(void * data, obs_data_t * settings)
+{
+    UNUSED_PARAMETER(data);
+    UNUSED_PARAMETER(settings);
+}
+
 struct obs_source_info chatSourceInfo
 {
     .id = "p5_chat_source",
@@ -40,9 +46,9 @@ struct obs_source_info chatSourceInfo
     .destroy = chatSourceDestroy,            // static void (void * data)
     .get_width = chatSourceGetWidth,         // static uint32_t (void * data)
     .get_height = chatSourceGetHeight,       // static uint32_t (void * data)
+    .update = chatSourceUpdate,              // static void (void * data, obs_data_t * settings)
     /* To be implemented                        Signatures
     -------------------------------------------------------------------------------
-    .update = chatSourceUpdate,              // static void (void * data, obs_data_t * settings)
     .get_defaults = chatSourceDefaults,      // static void (obs_data_t * settings)
     .show = chatSourceShow,                  // static void (void * data)
     .hide = chatSourceHide,                  // static void (void * data)
