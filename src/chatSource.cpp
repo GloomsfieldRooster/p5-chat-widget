@@ -7,16 +7,21 @@ static const char * chatSourceGetName(void * unused)
     return obs_module_text("ChatSource");
 }
 
+static void * chatSourceCreate(obs_data_t * settings, obs_source_t * source)
+{
+    UNUSED_PARAMETER(settings);
+    UNUSED_PARAMETER(source);
+}
+
 struct obs_source_info chatSourceInfo
 {
     .id = "p5_chat_source",
     .type = OBS_SOURCE_TYPE_INPUT,
     .output_flags = OBS_SOURCE_VIDEO,
     .get_name = chatSourceGetName,           // static const char * (void * unused)
-    .icon_type = OBS_ICON_TYPE_TEXT,
+    .create = chatSourceCreate,              // static void * (obs_data_t * settings, obs_source_t * source)
     /* To be implemented                        Signatures
     -------------------------------------------------------------------------------
-    .create = chatSourceCreate,              // static void * (obs_data_t * settings, obs_source_t * source)
     .get_width = chatSourceGetWidth,         // static uint32_t (void * data)
     .get_height = chatSourceGetHeight,       // static uint32_t (void * data)
     .update = chatSourceUpdate,              // static void (void * data, obs_data_t * settings)
@@ -29,4 +34,5 @@ struct obs_source_info chatSourceInfo
     .get_properties = chatSourceProperties,  // static obs_properties_t * (void * data)
     .activate = chatSourceActivate,          // static void (void * data)
     */
+    .icon_type = OBS_ICON_TYPE_TEXT,
 };
