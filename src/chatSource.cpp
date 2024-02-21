@@ -13,6 +13,11 @@ static void * chatSourceCreate(obs_data_t * settings, obs_source_t * source)
     UNUSED_PARAMETER(source);
 }
 
+static void chatSourceDestroy(void * data)
+{
+    UNUSED_PARAMETER(data);
+}
+
 static uint32_t chatSourceGetWidth(void * data)
 {
     chatSource * source = static_cast<chatSource *>(data);
@@ -32,12 +37,12 @@ struct obs_source_info chatSourceInfo
     .output_flags = OBS_SOURCE_VIDEO,
     .get_name = chatSourceGetName,           // static const char * (void * unused)
     .create = chatSourceCreate,              // static void * (obs_data_t * settings, obs_source_t * source)
+    .destroy = chatSourceDestroy,            // static void (void * data)
     .get_width = chatSourceGetWidth,         // static uint32_t (void * data)
     .get_height = chatSourceGetHeight,       // static uint32_t (void * data)
     /* To be implemented                        Signatures
     -------------------------------------------------------------------------------
     .update = chatSourceUpdate,              // static void (void * data, obs_data_t * settings)
-    .destroy = chatSourceDestroy             // static void (void * data)
     .get_defaults = chatSourceDefaults,      // static void (obs_data_t * settings)
     .show = chatSourceShow,                  // static void (void * data)
     .hide = chatSourceHide,                  // static void (void * data)
