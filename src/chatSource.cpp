@@ -10,10 +10,10 @@ static const char * chatSourceGetName(void * unused)
 static void * chatSourceCreate(obs_data_t * settings, obs_source_t * source)
 {
     UNUSED_PARAMETER(settings);
-    UNUSED_PARAMETER(source);
 
-    chatSource * newChatSoure = new chatSource;
-    return newChatSoure;
+    chatSource * newChatSource = new chatSource;
+    newChatSource->source = source;
+    return newChatSource;
 }
 
 static void chatSourceDestroy(void * data)
@@ -37,8 +37,13 @@ static uint32_t chatSourceGetHeight(void * data)
 
 static void chatSourceUpdate(void * data, obs_data_t * settings)
 {
-    UNUSED_PARAMETER(data);
-    UNUSED_PARAMETER(settings);
+    chatSource * source = static_cast<chatSource *>(data);
+
+    uint32_t width = (uint32_t)obs_data_get_int(settings, "width");
+    uint32_t height = (uint32_t)obs_data_get_int(settings, "height");
+
+    source->width = width;
+    source->height = height;
 }
 
 static void chatSourceActivate(void * data)
@@ -54,7 +59,8 @@ static void chatSourceRender(void * data, gs_effect_t * effect)
 
 static void chatSourceDefaults(obs_data_t * settings)
 {
-    UNUSED_PARAMETER(settings);
+    obs_data_set_default_int(settings, "width", 320);
+    obs_data_set_default_int(settings, "height", 1080);
 }
 
 static void chatSourceShow(void * data)
@@ -80,6 +86,8 @@ static obs_properties_t * chatSourceProperties(void * data)
     obs_properties_t * properties = obs_properties_create();
 
     obs_properties_add_text(properties, "username", obs_module_text("Username"), OBS_TEXT_DEFAULT);
+    obs_properties_add_int(properties, "width", obs_module_text("Width"), 0, 4096, 1);
+    obs_properties_add_int(properties, "height", obs_module_text("Height"), 0, 4096, 1);
 
     return properties;
 }
