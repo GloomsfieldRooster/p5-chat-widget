@@ -7,5 +7,7 @@ struct chatSource
 {
     uint32_t width;
     uint32_t height;
+
+    obs_source_t * source;
 };
 
