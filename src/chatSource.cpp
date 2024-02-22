@@ -4,7 +4,7 @@ static const char * chatSourceGetName(void * unused)
 {
     UNUSED_PARAMETER(unused);
 
-    return obs_module_text("ChatSource");
+    return obs_module_text("Chat Source");
 }
 
 static void * chatSourceCreate(obs_data_t * settings, obs_source_t * source)
@@ -18,7 +18,9 @@ static void * chatSourceCreate(obs_data_t * settings, obs_source_t * source)
 
 static void chatSourceDestroy(void * data)
 {
-    UNUSED_PARAMETER(data);
+    chatSource * source = static_cast<chatSource *>(data);
+
+    delete source;
 }
 
 static uint32_t chatSourceGetWidth(void * data)
