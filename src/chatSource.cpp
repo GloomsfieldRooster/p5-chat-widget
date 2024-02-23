@@ -13,12 +13,27 @@ static void * chatSourceCreate(obs_data_t * settings, obs_source_t * source)
 
     chatSource * newChatSource = new chatSource;
     newChatSource->source = source;
+
+    newChatSource->textSettings = obs_data_create();
+    obs_data_set_string(newChatSource->textSettings, "text", "test1");
+
+    newChatSource->textSource = obs_source_create_private("text_ft2_source", "test", newChatSource->textSettings);
+
+    obs_source_add_active_child(newChatSource->source, newChatSource->textSource);
+
     return newChatSource;
 }
 
 static void chatSourceDestroy(void * data)
 {
     chatSource * source = static_cast<chatSource *>(data);
+
+    obs_source_remove(source->textSource);
+    obs_source_release(source->textSource);
+    source->textSource = nullptr;
+
+    obs_data_release(source->textSettings);
+    source->textSettings = nullptr;
 
     delete source;
 }
@@ -44,6 +59,9 @@ static void chatSourceUpdate(void * data, obs_data_t * settings)
 
     source->width = width;
     source->height = height;
+
+    obs_data_set_string(source->textSettings, "text", "test2");
+    obs_source_update(source->textSource, source->textSettings);
 }
 
 static void chatSourceActivate(void * data)
@@ -53,8 +71,11 @@ static void chatSourceActivate(void * data)
 
 static void chatSourceRender(void * data, gs_effect_t * effect)
 {
-    UNUSED_PARAMETER(data);
     UNUSED_PARAMETER(effect);
+
+    chatSource * source = static_cast<chatSource *>(data);
+    
+    obs_source_video_render(source->textSource);
 }
 
 static void chatSourceDefaults(obs_data_t * settings)
