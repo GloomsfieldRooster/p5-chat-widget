@@ -7,10 +7,22 @@ static const char * chatSourceGetName(void * unused)
     return obs_module_text("Chat Source");
 }
 
+static void chatSourceUpdate(void * data, obs_data_t * settings)
+{
+    chatSource * source = static_cast<chatSource *>(data);
+
+    uint32_t width = (uint32_t)obs_data_get_int(settings, "width");
+    uint32_t height = (uint32_t)obs_data_get_int(settings, "height");
+
+    source->width = width;
+    source->height = height;
+
+    obs_data_set_string(source->textSettings, "text", "test2");
+    obs_source_update(source->textSource, source->textSettings);
+}
+
 static void * chatSourceCreate(obs_data_t * settings, obs_source_t * source)
 {
-    UNUSED_PARAMETER(settings);
-
     chatSource * newChatSource = new chatSource;
     newChatSource->source = source;
 
@@ -20,6 +32,8 @@ static void * chatSourceCreate(obs_data_t * settings, obs_source_t * source)
     newChatSource->textSource = obs_source_create_private("text_ft2_source", "test", newChatSource->textSettings);
 
     obs_source_add_active_child(newChatSource->source, newChatSource->textSource);
+
+    chatSourceUpdate(newChatSource, settings);
 
     return newChatSource;
 }
@@ -48,20 +62,6 @@ static uint32_t chatSourceGetHeight(void * data)
 {
     chatSource * source = static_cast<chatSource *>(data);
     return source->height;
-}
-
-static void chatSourceUpdate(void * data, obs_data_t * settings)
-{
-    chatSource * source = static_cast<chatSource *>(data);
-
-    uint32_t width = (uint32_t)obs_data_get_int(settings, "width");
-    uint32_t height = (uint32_t)obs_data_get_int(settings, "height");
-
-    source->width = width;
-    source->height = height;
-
-    obs_data_set_string(source->textSettings, "text", "test2");
-    obs_source_update(source->textSource, source->textSettings);
 }
 
 static void chatSourceActivate(void * data)
